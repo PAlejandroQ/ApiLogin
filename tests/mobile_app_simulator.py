@@ -82,6 +82,24 @@ def renew_access_token():
 
         time.sleep(30)  # Renueva el access_token cada 30 segundos
 
+def modify_user_role(new_role):
+    """Modifica el rol del usuario."""
+    global access_token
+    if not access_token:
+        print("[WARN] No hay access_token disponible. No se puede modificar el rol.")
+        return
+
+    headers = {'Authorization': f'Bearer {access_token}'}
+    response = requests.put(f'{BASE_URL}/modify-role', json={
+        'username': USERNAME,
+        'role': new_role
+    }, headers=headers)
+
+    if response.status_code == 200:
+        print("[INFO] Rol modificado exitosamente: ", response.json())
+    else:
+        print(f"[ERROR] Error al modificar el rol: {response.json()}")
+
 def main():
     """Punto de entrada principal."""
     # Registrar usuario
@@ -89,6 +107,9 @@ def main():
 
     # Iniciar sesión
     login_user()
+
+    # Modificar el rol del usuario
+    modify_user_role('admin')
 
     # Ejecutar tareas periódicas en hilos separados
     threading.Thread(target=access_protected_endpoint, daemon=True).start()
