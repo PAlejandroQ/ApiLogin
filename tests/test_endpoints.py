@@ -8,6 +8,7 @@ def register_user(username, password, role='user'):
         'password': password,
         'role': role
     })
+
     print(response.json())
 
 def login_user(username, password):
