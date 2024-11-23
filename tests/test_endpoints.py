@@ -23,6 +23,6 @@ def access_protected_endpoint(token):
     print(response.json())
 
 # Ejemplo de uso
-#register_user('admin', 'admin123', 'admin')
-tokens = login_user('admin', 'admin123')
-access_protected_endpoint(tokens['access_token'])
+register_user('admin', 'admin123', 'admin')
+#tokens = login_user('admin', 'admin1223')
+#access_protected_endpoint(tokens['access_token'])
