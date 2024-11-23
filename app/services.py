@@ -63,3 +63,20 @@ def refresh_access_token(refresh_token):
         return {'message': 'Refresh token expired', 'status': 401}
     except jwt.InvalidTokenError:
         return {'message': 'Invalid token', 'status': 401}
+
+def update_user_role(data):
+    username = data.get('username')
+    new_role = data.get('role')
+    if not username or not new_role:
+        return {'message': 'Username and role are required', 'status': 400}
+
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        return {'message': 'User not found', 'status': 404}
+
+    if user.role == new_role:
+        return {'message': 'User already has this role', 'status': 400}
+
+    user.role = new_role
+    db.session.commit()
+    return {'username': username, 'new_role': new_role, 'status': 200}

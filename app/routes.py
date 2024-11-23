@@ -4,6 +4,7 @@ from .services import (
     login_user,
     generate_access_token,
     refresh_access_token,
+    update_user_role,
 )
 from .decorators import jwt_required, role_required, audit_log
 
@@ -39,3 +40,13 @@ def protected():
 
 def register_routes(app):
     app.register_blueprint(auth_bp, url_prefix='/auth')
+
+@auth_bp.route('/modify-role', methods = ['PUT'])
+@jwt_required
+@role_required('admin')
+@audit_log('MODIFY')
+
+def modify_role():
+    data = request.json
+    response = update_user_role(data)
+    return jsonify(response), response.get('status', 400)
