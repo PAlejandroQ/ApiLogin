@@ -45,7 +45,6 @@ def register_routes(app):
 @jwt_required
 @role_required('admin')
 @audit_log('MODIFY')
-
 def modify_role():
     data = request.json
     response = update_user_role(data)

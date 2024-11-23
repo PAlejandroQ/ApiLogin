@@ -45,6 +45,7 @@ def audit_log(action):
 
             retval =  func(*args, **kwargs)
             if retval:
+
                 if retval[1] == 200 or retval[1] == 201:
                     log_event(
                         level="info",

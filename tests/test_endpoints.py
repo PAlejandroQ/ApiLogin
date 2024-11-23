@@ -23,7 +23,17 @@ def access_protected_endpoint(token):
     response = requests.get(f'{BASE_URL}/protected', headers=headers)
     print(response.json())
 
+def modify_user_role(token, username, new_role):
+    headers = {'Authorization': f'Bearer {token}'}
+    response = requests.put(f'{BASE_URL}/modify-role', json={
+        'username': username,
+        'role': new_role
+    }, headers=headers)
+    print(response.json())
+
 # Ejemplo de uso
 register_user('admin', 'admin123', 'admin')
-#tokens = login_user('admin', 'admin1223')
+#login_user('admin', 'admin1223')
 #access_protected_endpoint(tokens['access_token'])
+tokens = login_user('admin', 'admin123')
+print(tokens)
