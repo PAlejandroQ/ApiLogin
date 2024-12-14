@@ -70,6 +70,10 @@ def update_user_role(data):
     if not username or not new_role:
         return {'message': 'Username and role are required', 'status': 400}
 
+    VALID_ROLES = ['user', 'admin']
+    if new_role not in VALID_ROLES:
+        return {'message': 'Invalid role', 'status': 400}
+
     user = User.query.filter_by(username=username).first()
     if not user:
         return {'message': 'User not found', 'status': 404}
